@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+
 const summaryModel = new mongoose.Schema({
     uniqueCalls: {
         type: Number,
@@ -25,7 +27,26 @@ const summaryModel = new mongoose.Schema({
         type: String,
         require:true,
     },
-   
+    requirementNotMatch:{
+        type:Number,
+        default:0
+    },
+    developer:{
+        type:Number,
+        default:0
+    },
+    taskAdded:{
+        type:Number,
+        default:0
+    },
+    left:{
+        type:Number,
+        default:0
+    },
+    newExploring:{
+        type:Number,
+        default:0
+    },
     monthYear:{
         type: String,
         default: new Date().getMonth()+1 + '-' + new Date().getFullYear(),

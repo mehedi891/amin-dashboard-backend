@@ -1,5 +1,5 @@
 const clientModel = require('../models/client.model');
-
+const schedule = require('node-schedule');
 const getAllClient  = async (req,res)=>{
     const page = req.query.page;
     const size = req.query.size;
@@ -84,6 +84,22 @@ const updateAllClient = async (req,res) =>{
     }
   
 }
+const updateAllClientCall = async (req,res) =>{
+    
+    console.log('run from Schedule')
+    try {
+         await clientModel.updateMany({},{
+            callThisMonth: 0,
+            noOfCalls:0
+        });
+        
+    } catch (error) {
+       
+    }
+  
+}
+
+ schedule.scheduleJob('40 * * * * *', updateAllClientCall);
 
 const deleteAClient = async(req,res) =>{
     const id = req.params.id

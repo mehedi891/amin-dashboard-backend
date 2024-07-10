@@ -3,6 +3,7 @@ const cors = require('cors');
 const clientRouter = require('./routes/client.route');
 const summaryRouter = require('./routes/summary.route');
 const userRouter = require('./routes/user.route');
+const revReasonRouter = require('./routes/revReason.route');
 
 
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use('/api/client',clientRouter);
 app.use('/api/summary',summaryRouter);
 app.use('/api/user',userRouter);
+app.use('/api/rev-reason',revReasonRouter);
 
 
 

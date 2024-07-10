@@ -54,6 +54,10 @@ const clientModel = new mongoose.Schema({
         type:String,
         default:'no'
     },
+    revReasonNotAsking:{
+        type:String,
+        default:'given'
+    },
     timeAndDate : {
         type : Date,
         default : Date.now()

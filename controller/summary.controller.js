@@ -24,6 +24,11 @@ const createAsummary = async (req,res) =>{
         });
     }
 }
+
+
+
+
+
 const updateASummaryData = async (req,res) =>{
     const monthYear = req.params.monthYear.split('-' , 2);
     const month = monthYear[0];
@@ -38,7 +43,7 @@ const updateASummaryData = async (req,res) =>{
         const isExist = await summaryModel.find({
             $and: [{app:req.params.app},{monthYear:`${month}-${year}`}]
         });
-        console.log(isExist);
+        //console.log(isExist);
     if(isExist.length > 0){
         //console.log('from if sum');
         if(req.body.updateAll){
@@ -62,6 +67,8 @@ const updateASummaryData = async (req,res) =>{
         const totalAskRev = req.body.incTotalAskRev ? isExist[0].totalAskRev + 1 : isExist[0].totalAskRev;
         const totalReviewGive = req.body.incTotalReviewGive ? isExist[0].totalReviewGive + 1 : isExist[0].totalReviewGive;
         const uniqueCalls = req.body.incUniqueCalls ? isExist[0].uniqueCalls + 1 : isExist[0].uniqueCalls;
+        const revReason = req.body.revReason;
+       
 
         const updatedSummaryData = {
             totalStore,
@@ -70,6 +77,7 @@ const updateASummaryData = async (req,res) =>{
             totalReviewGive,
             uniqueCalls,
             monthYear:`${month}-${year}`,
+            revReason,
             app,
         }
         //console.log(updatedSummaryData ,'from if');
@@ -197,9 +205,44 @@ const getASummaryDataByMonthYear = async (req,res) =>{
 }
 
 
+const updateRevReason = async(req,res)=>{
+    const monthYear = req.params.monthYear.split('-' , 2);
+    const month = monthYear[0];
+    const year = monthYear[1];
+    const filter = `${month}-${year}`;
+    const currDate = new Date(`${year}-${month}`);
+    currDate.setMonth(currDate.getMonth());
+    const monthName =  currDate.toLocaleString('default', { month: 'long' }).toLowerCase();
+    const summaryData = req.body;
+    try {
+        const isExist = await summaryModel.find({
+            $and: [{app:req.params.app},{monthYear:`${month}-${year}`}]
+        });
+        if(isExist[0]){
+            const result = await summaryModel.updateOne(
+                {_id:isExist[0]._id},
+                {
+                    $set: summaryData
+                },
+                { upsert: false }
+            );
+        
+            res.status(201).json({
+                        message: `Updated summaryData Successfullyyy`,
+                        result
+                    });
+        }
+    } catch (error) {
+        res.status(404).json({
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     getAllSummaryData,
     createAsummary,
     getASummaryDataByMonthYear,
     updateASummaryData,
+    updateRevReason
 }
