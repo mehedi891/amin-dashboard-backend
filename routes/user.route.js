@@ -8,6 +8,6 @@ router.get('/online/useronline',getUsersOnlineStatus);
 router.put('/:emailOrId',updateUserByEmailOrID);
 router.delete('/:id',deleteAUser);
 router.post('/register',createAUser);
-router.post('/login',loginUser);
+router.post('/login',loginUser); 
 
 module.exports = router;

@@ -145,7 +145,7 @@ const loginUser = async(req,res)=>{
 const getUsersOnlineStatus = async(req,res) =>{
     try {
         const online = await userModel.find({onlineStatus:true});
-        console.log(online);
+        //console.log(online);
         if(online.length === 0){
             res.status(404).json({
                 message: 'No one is online'

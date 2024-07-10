@@ -50,7 +50,7 @@ const updateAClient = async (req,res) =>{
     //console.log("id:",id)
     try {
         const isCLient = await clientModel.find({_id:id})
-        console.log('isClinet:',isCLient)
+        //console.log('isClinet:',isCLient)
         const updatedClient = await clientModel.updateOne({_id:id},{
             $set:updateClientData,
         });

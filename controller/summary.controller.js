@@ -32,16 +32,32 @@ const updateASummaryData = async (req,res) =>{
      const updatedSummaryData1 = req.body;
      //console.log('month:',month);
 
-     console.log(updatedSummaryData1)
+     //console.log(updatedSummaryData1)
 
     try {
         const isExist = await summaryModel.find({
             $and: [{app:req.params.app},{monthYear:`${month}-${year}`}]
         });
-        //console.log(isExist);
+        console.log(isExist);
     if(isExist.length > 0){
-        console.log('from if sum');
-        const totalStore = req.body.incTotalStore ? isExist[0].totalStore + 1 : isExist[0].totalStore ;
+        //console.log('from if sum');
+        if(req.body.updateAll){
+           // console.log('from if sum');
+            const result = await summaryModel.updateOne(
+                {_id:isExist[0]._id},
+                {
+                    $set: req.body
+                },
+                { upsert: false }
+            );
+        
+            res.status(201).json({
+                        message: `Updated summaryData Successfully`,
+                        result
+                    });
+        }else{
+            //console.log('from else sum uiui');
+            const totalStore = req.body.incTotalStore ? isExist[0].totalStore + 1 : isExist[0].totalStore ;
         const totalCallCurrMonth = req.body.incTotalCallCurrMonth ? isExist[0].totalCallCurrMonth + 1 : isExist[0].totalCallCurrMonth;
         const totalAskRev = req.body.incTotalAskRev ? isExist[0].totalAskRev + 1 : isExist[0].totalAskRev;
         const totalReviewGive = req.body.incTotalReviewGive ? isExist[0].totalReviewGive + 1 : isExist[0].totalReviewGive;
@@ -69,9 +85,11 @@ const updateASummaryData = async (req,res) =>{
                     message: `Updated summaryData Successfully`,
                     result
                 });
+        }
+        
                 
     }else{
-        console.log('from else sum');
+        //console.log('from else sum');
         const totalStore = req.body.incTotalStore ?  1 : 0 ;
         const totalCallCurrMonth = req.body.incTotalCallCurrMonth ? 1 : 0 ;
         const totalAskRev = req.body.incTotalAskRev ?  1 : 0;

@@ -42,6 +42,18 @@ const clientModel = new mongoose.Schema({
         type:String,
         
     },
+    lastUpdateBy:{
+        type:String,
+        default:'No One Update'
+    },
+    addedBy:{
+        type:String,
+        default:'Admin'
+    },
+    storeDev:{
+        type:String,
+        default:'no'
+    },
     timeAndDate : {
         type : Date,
         default : Date.now()
