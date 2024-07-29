@@ -1,5 +1,7 @@
 const clientModel = require('../models/client.model');
 const schedule = require('node-schedule');
+
+
 const getAllClient  = async (req,res)=>{
     const page = req.query.page;
     const size = req.query.size;
@@ -99,7 +101,7 @@ const updateAllClientCall = async (req,res) =>{
   
 }
 
- schedule.scheduleJob('40 * * * * *', updateAllClientCall);
+ //schedule.scheduleJob('40 * * * * *', updateAllClientCall);
 
 const deleteAClient = async(req,res) =>{
     const id = req.params.id
@@ -125,9 +127,10 @@ const createAclient  = async (req,res)=>{
             error: ' client is already exists'
         });
     }else{
-        await newClientModel.save();
+        const newCl = await newClientModel.save();
         res.status(201).json({
             message: `Successfully added ${req.body.storeUrl}`,
+            id:newCl._id, 
             existsClient
         });
     }

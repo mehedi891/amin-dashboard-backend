@@ -27,25 +27,22 @@ const summaryModel = new mongoose.Schema({
         type: String,
         require:true,
     },
-    requirementNotMatch:{
-        type:Number,
-        default:0
+    totalStoreCallThisMonth:{
+        type:Array,
+        default:[]
+        
     },
-    developer:{
-        type:Number,
-        default:0
+    totalStoreAskRevThisMonth:{
+        type:Array,
+        default:[]
     },
-    taskAdded:{
-        type:Number,
-        default:0
+    totalStoreGivenRevThisMonth:{
+        type:Array,
+        default:[]
     },
-    left:{
-        type:Number,
-        default:0
-    },
-    newExploring:{
-        type:Number,
-        default:0
+    revReason:{
+        type: Array,
+        default:[]
     },
     monthYear:{
         type: String,
