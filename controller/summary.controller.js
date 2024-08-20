@@ -168,7 +168,7 @@ const updateASummaryData = async (req, res) => {
             });
 
         } else {
-            console.log("from eklse update",req.body)
+            //console.log("from eklse update",req.body)
             // const result = await summaryModel.updateOne(
             //     { _id: isExist[0]._id },
             //     {
@@ -303,7 +303,7 @@ const updateRevReason = async (req, res) => {
                 { upsert: false }
             );
             //console.log(summaryObj);
-            res.status(201).json({
+            res.status(201).json({ 
                 message: `Updated summaryData Successfullyyy`,
                 result
             });
@@ -319,21 +319,20 @@ const updateRevReason = async (req, res) => {
             }
 
 
-            const result = await summaryModel.updateOne(
-                { _id: isExist[0]?._id },
-                {
-                    $set: summaryObj
-                },
-                { upsert: true }
-            );
-            console.log(summaryObj,"from else dasf");
+            const result = new summaryModel(summaryObj);
+            await result.save();
             res.status(201).json({
-                message: `Updated summaryData Successfullyyy ed`,
+                message: `Updated summaryData Successfully`,
                 result
             });
+
+            //console.log(summaryObj,"from else dasf");
+          
         }
+        
     } catch (error) {
         res.status(404).json({
+            message: error.message,
             error: error.message,
         });
     }
